@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -15,7 +14,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import { api } from '@services/api';
-
 
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
