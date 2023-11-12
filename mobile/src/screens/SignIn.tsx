@@ -1,102 +1,72 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
 
-import {
-    VStack,
-    Image,
-    Text,
-    Center,
-    Heading,
-    ScrollView
-} from 'native-base';
-
-import { AuthNavigatorRoutesProps } from '@routes/auth.routes'
+import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
 
-import { Input } from '@components/Input';
-import { Button } from '@components/Button';
+import { Input } from "@components/Input";
+import { Button } from "@components/Button";
 
 export function SignIn() {
 
-    const navigation = useNavigation<AuthNavigatorRoutesProps>();
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-    function handleNewAccount(){
-        navigation.navigate('signUp');
-    }
+  function handleNewAccount() {
+    navigation.navigate('signUp');
+  }
 
-    return (
-        <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
-            showsVerticalScrollIndicator={false}
-        >
-            <VStack
-                flex={1}
-                px={10}
-                pb={16}
-            >
-                <Image
-                    source={BackgroundImg}
-                    defaultSource={BackgroundImg}
-                    alt="Pessoas treinando"
-                    resizeMode="contain"
-                    position="absolute"
-                />
+  return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+        <VStack flex={1} px={10} pb={16}>
+        <Image 
+          source={BackgroundImg}
+          defaultSource={BackgroundImg}
+          alt="Pessoas treinando"
+          resizeMode="contain"
+          position="absolute"
+        />
 
-                <Center my={24}>
-                    <LogoSvg />
-                    <Text
-                        color="gray.100"
-                        fontSize="sm"
-                        fontFamily="body"
-                    >
-                        Treine sua mente e o seu corpo
-                    </Text>
-                </Center>
+        <Center my={24}>
+          <LogoSvg />
 
-                <Center>
-                    <Heading
-                        color="gray.100"
-                        fontSize="xl"
-                        fontFamily="heading"
-                        mb={6}
-                    >
-                        Acesse sua conta
-                    </Heading>
+          <Text color="gray.100" fontSize="sm">
+            Treine sua mente e o seu corpo.
+          </Text>
+        </Center>
 
-                    <Input
-                        placeholder='E-mail'
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                    />
+        <Center>
+          <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
+            Acesse a conta
+          </Heading>
 
-                    <Input
-                        placeholder='Senha'
-                        secureTextEntry
-                    />
-                    <Button
-                        title='Acessar'
-                    />
-                </Center>
+          <Input 
+            placeholder="E-mail" 
+            keyboardType="email-address"
+            autoCapitalize="none"
 
-                <Center mt={24}>
-                    <Text
-                        color="gray.100"
-                        fontSize="sm"
-                        fontFamily="body"
-                        mb={3}
+          />
+          <Input 
+            placeholder="Senha" 
+            secureTextEntry
+          />
 
-                    >
-                        Ainda não tem acesso
-                    </Text>
+          <Button title="Acessar" />
+        </Center>
 
-                    <Button
-                        title='Criar conta' 
-                        variant="outline"
-                        onPress={handleNewAccount}
-                    />
-                </Center>
-            </VStack>
-        </ScrollView>
-    );
+        <Center mt={24}>
+          <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
+            Ainda não tem acesso?
+          </Text>
+
+          <Button 
+            title="Criar Conta" 
+            variant="outline"
+            onPress={handleNewAccount}
+          />
+        </Center>
+      </VStack>
+    </ScrollView>
+  );
 }
