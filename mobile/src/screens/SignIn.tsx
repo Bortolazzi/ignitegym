@@ -1,5 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { VStack, Image, Text, Center, Heading, ScrollView, useToast } from "native-base";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 
@@ -10,9 +14,6 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 import { useAuth } from '@hooks/useAuth';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup';
 import { api } from '@services/api';
 import { AppError } from "@utils/AppError";
 
@@ -29,7 +30,9 @@ const signUpSchema = yup.object({
 export function SignIn() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   const toast = useToast();
-  const { signIn } = useAuth();
+  const { signInAsync } = useAuth();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema)
@@ -41,13 +44,13 @@ export function SignIn() {
 
   async function handleSignIn({ email, password }: FormDataProps) {
     try {
-      const response = await api.post('/sessions', { email, password });
-      console.log(response.data);
-
-
+      setIsLoading(true);
+      await signInAsync(email, password);
     } catch (exception) {
       const isAppError = exception instanceof AppError;
       const title = isAppError ? exception.message : "Não foi acessar a conta. Tente novamente mais tarde";
+
+      setIsLoading(false);
 
       toast.show({
         title,
@@ -115,6 +118,7 @@ export function SignIn() {
           <Button
             title="Acessar"
             onPress={handleSubmit(handleSignIn)}
+            isLoading={isLoading}
           />
         </Center>
 
